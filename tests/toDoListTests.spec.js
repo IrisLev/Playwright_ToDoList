@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import ToDoPage from '../pages/ToDoPage';
-import toDocases from '../data.ItemsInput.json';
+import toDocases from '../data/ItemsInput.json';
 
 test.describe('Empty state test', () => {
   let thePage;
@@ -31,7 +31,8 @@ test.describe('Add new item', () => {
     thePage = new ToDoPage(page);
     await thePage.navigate22do();
   });
-  test.only('Add a new item to an empty state', async ({}) => {
+  test('Add a new item to an empty state', async ({}) => {
     await thePage.addTask('Feed cats');
   });
+
 });
