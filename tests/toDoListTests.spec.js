@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import ToDoPage from '../pages/ToDoPage';
-import toDocases from '../data/ItemsInput.json';
+import toDocases from '../data/ItemsInput.json' assert { type: 'json' };
 
 test.describe('Empty state test', () => {
   let thePage;
@@ -31,8 +31,23 @@ test.describe('Add new item', () => {
     thePage = new ToDoPage(page);
     await thePage.navigate22do();
   });
-  test('Add a new item to an empty state', async ({}) => {
-    await thePage.addTask('Feed cats');
-  });
+  test.only('Verify lelements in a new list item', async ({}) => {
+    // const task = 'Feed cats';
+    // await thePage.addTask(task);
+    // await thePage.assertTaskIsInList(task);
+    // const itemsCount = await thePage.numberOfTasksinTheList();
+    // await expect(itemsCount).toBe(1);
 
+    const task = 'Feed cats';
+    await thePage.addTask(task);
+    await thePage.assertTaskIsInList(task);
+    await expect(thePage.)
+
+  });
+  test('add todos from external data', async ({ page }) => {
+    for (const text of toDocases.valid) {
+      await thePage.addTask(text);
+      await thePage.assertTaskIsInList(text);
+    }
+  });
 });

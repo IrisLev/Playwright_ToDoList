@@ -1,4 +1,6 @@
+import { expect } from 'playwright/test';
 import CommonActions from '../utils/CommonActions';
+import { count } from 'node:console';
 
 export default class ToDoPage {
   constructor(page) {
@@ -22,9 +24,19 @@ export default class ToDoPage {
     return this.page.getByRole('contentinfo', { class: '.footer' }).textContent();
   }
   async addTask(task) {
-    //this.actions.fillValue(this.textField, task);
     const myElement = this.page.getByRole('textbox', { id: '#todo-input' });
-    await myElement.fill('Feed cats');
+    await myElement.fill(task);
     await myElement.press('Enter');
+  }
+  async assertTaskIsInList(task) {
+    const myElement = this.page.locator('ul.todo-list');
+    await expect(myElement).toContainText(task);
+  }
+  async isListItemVisible(text) {
+    // return await this.page.locator('ul.todo-list li').filter({ hasText: text }).count();
+    return await this.page.locator('li', { hasText: text }).count();
+  }
+  async numberOfTasksinTheList() {
+    return await this.page.locator('ul.todo-list>li').count();
   }
 }
